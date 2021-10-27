@@ -1,8 +1,11 @@
 import express from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 
 const app = express();
 app.use(express.json());
+app.use(cors());
+app.use(express.static('build'));
 
 // app.use(morgan('tiny'));
 morgan.token('body', (req, res) => JSON.stringify(req.body));
@@ -86,7 +89,7 @@ function logger(request, response, next) {
   console.log('log');
   next();
 }
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, (req, res) => {
   console.log(`listening on port ${PORT}`);
